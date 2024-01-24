@@ -67,5 +67,13 @@ namespace CostumeShop.Controllers
 
             return View(brand);
         }
+
+        [HttpGet]
+        public IActionResult Edit(Guid id)
+        {
+            Brand brand = _dbContext.Brand.FirstOrDefault(x => x.Id == id);
+
+            return View(brand);
+        }
     }
 }
