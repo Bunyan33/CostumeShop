@@ -1,5 +1,6 @@
 ﻿using CostumeShop.Data;
 using CostumeShop.Models;
+using CostumeShop.Repo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,11 +10,13 @@ namespace CostumeShop.Controllers
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IWebHostEnvironment _webHostEnvironment;
-
-        public BrandController(ApplicationDbContext dbContext, IWebHostEnvironment webHostEnvironment)
+        private readonly IRepo _repo;
+        // Brand Controller
+        public BrandController(ApplicationDbContext dbContext, IWebHostEnvironment webHostEnvironment, IRepo repo)
         {
             _dbContext = dbContext;
             _webHostEnvironment = webHostEnvironment;
+            _repo= repo;
         }
 
         [HttpGet]
@@ -66,9 +69,9 @@ namespace CostumeShop.Controllers
         [HttpGet]
         public IActionResult Details(Guid id)
         {
-            Brand brand = _dbContext.Brand.FirstOrDefault(x => x.Id == id);
+            
 
-            return View(brand);
+            return View(_repo.Delete(id));
         }
 
         [HttpGet]
@@ -139,6 +142,7 @@ namespace CostumeShop.Controllers
         [HttpGet]
         public IActionResult Delete(Guid id)
         {
+
             Brand brand = _dbContext.Brand.FirstOrDefault(x => x.Id == id);
 
             return View(brand);

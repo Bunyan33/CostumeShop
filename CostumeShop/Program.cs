@@ -1,4 +1,5 @@
 using CostumeShop.Data;
+using CostumeShop.Repo;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 #endregion
+
+builder.Services.AddScoped<IRepo,Repo>();
 
 builder.Services.AddControllersWithViews();
 
